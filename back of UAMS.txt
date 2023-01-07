@@ -1,0 +1,414 @@
+//====================MAIN=================
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Week4ProgramingDay.BL;
+
+namespace Week4ProgramingDay
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            char op;
+            List<DegreeProgram> Degree = new List<DegreeProgram>();
+            List<STUDENT> Student = new List<STUDENT>();
+            do
+            {
+                header();
+                op = menu();
+                Clear();
+                if (op == '1')
+                {
+                  
+                    header();
+                    Student.Add(AddStudent(Degree));
+                    Clear();
+                }
+                else if (op == '2')
+                {
+                    
+                    header();
+                    Degree.Add(AddDegree());
+                    Clear();
+                }
+                else if (op == '3')
+                {
+                    
+                    header();
+                    GenerateMerit(Student, Degree);
+                    Clear();
+                }
+                else if (op == '4')
+                {
+                   
+                    header();
+                    ViewAllStudent(Student);
+                    Clear();
+                }
+                else if (op == '5')
+                {
+                    
+                    header();
+                    SpecificView(Student);
+                    Clear();
+                }
+                else if (op == '6')
+                {
+                    header();
+                    AddregisteredSubject(Student);
+                    Clear();
+                }
+                else if (op == '7')
+                {
+                    header();
+                    calculateFees(Student);
+                    Clear();
+                }
+            }
+            while (op != '8');
+        }
+        static void header()
+        {
+            Console.WriteLine("==================> UAMS <====================");
+          
+        }
+        static char menu()
+        {
+            char op;
+            Console.WriteLine("1. Add Student.");
+            Console.WriteLine("2. Add Degree Program.");
+            Console.WriteLine("3. Generate Merit.");
+            Console.WriteLine("4. View Registered Students.");
+            Console.WriteLine("5. View Students of a Specific Program.");
+            Console.WriteLine("6. Register Subjects for a Specfic Program.");
+            Console.WriteLine("7. Calculate Fees for all Registered Students.");
+            Console.WriteLine("8. Exit");
+            Console.Write("Your Option ------> ");
+            op = char.Parse(Console.ReadLine());
+            return op;
+        }
+        static void Clear()
+        {
+            Console.WriteLine("Press any key button to continue");
+            Console.ReadKey();
+            Console.Clear();
+        }
+        static DegreeProgram AddDegree()
+        {
+            DegreeProgram newDegree = new DegreeProgram();
+            Console.Write("Enter Degree Name: ");
+            newDegree.title = Console.ReadLine();
+            Console.Write("Enter Degree Duration: ");
+            newDegree.duration = int.Parse(Console.ReadLine());
+            Console.Write("Enter Seats for Degree: ");
+            newDegree.availableSeats = int.Parse(Console.ReadLine());
+            Console.WriteLine("Enter how many subjects to Enter: ");
+            int NumOfSubject = int.Parse(Console.ReadLine());
+            SUBJECT temp = new SUBJECT();
+            int creditHrs = 0;
+            for (int i = 0; i < NumOfSubject; i++)
+            {
+
+                temp = newDegree.addSubject();
+                creditHrs = temp.creditHours + newDegree.creditHourCalculator();
+                if (creditHrs <= 20)
+                {
+                    newDegree.newSubjects.Add(temp);
+                }
+                else
+                {
+                    Console.WriteLine("Credit hours limit exceeded");
+                    break;
+                }
+            }
+            return newDegree;
+        }
+        static STUDENT AddStudent(List<DegreeProgram> Degree)
+        {
+            Console.Write("Enter Student Name: ");
+            string name = Console.ReadLine();
+            Console.Write("Enter Student Age: ");
+            int age = int.Parse(Console.ReadLine());
+            Console.Write("Enter Student FSc Marks: ");
+            float FscMarks = float.Parse(Console.ReadLine());
+            Console.Write("Enter Student Ecat Marks: ");
+            float EcatMarks = float.Parse(Console.ReadLine());
+
+            Console.WriteLine("Available Degree Programs");
+            for (int i = 0; i < Degree.Count; i++)
+            {
+                Console.WriteLine(Degree[i].title);
+            }
+
+            Console.Write("Enter how many preferences to Enter: ");
+            int NumOFPreference = int.Parse(Console.ReadLine());
+            List<DegreeProgram> newdegree = new List<DegreeProgram>();
+            for (int i = 0; i < NumOFPreference; i++)
+            {
+                DegreeProgram temp = new DegreeProgram();
+                temp.title = Console.ReadLine();
+                int count = 0;
+                for (int x = 0; x < Degree.Count; x++)
+                {
+                    if (temp.title == Degree[x].title)
+                    {
+                        newdegree.Add(temp);
+                        count++;
+                    }   
+                }
+                if (count == 0)
+                {
+                    Console.WriteLine("Wrong input");
+                }
+            }
+            STUDENT newStudent =  new STUDENT(name, age, FscMarks, EcatMarks, newdegree);
+
+            return newStudent;
+        }
+        static void ViewAllStudent(List<STUDENT> Student)
+        {
+            Console.WriteLine("Name \t \t FSC \t \t Ecat \t \t Age");
+            for (int i = 0; i < Student.Count; i++)
+            {
+                if (Student[i].registeredProgram != null)
+                {
+                    Console.WriteLine(Student[i].name + "\t \t" + Student[i].FscMarks + "\t \t" + Student[i].EcatMarks + "\t \t" + Student[i].age);
+                }
+                
+            }
+        }
+        static void GenerateMerit(List<STUDENT> Student, List<DegreeProgram> Degree)
+        {
+            sort(Student);
+            for (int i = 0; i < Student.Count; i++)
+            {
+                for (int j = 0; j < Student[i].newDegrees.Count; j++)
+                {
+                    if (Student[i].newDegrees[j].title == Degree[i].title && Degree[i].availableSeats > 0)
+                    {
+                        Console.WriteLine(Student[i].name + " got Admission in " + Student[i].newDegrees[j].title);
+                        Student[i].registeredProgram.Add(Degree[i]);
+                        Degree[i].availableSeats--;
+                    }
+                    else
+                    {
+                        Console.WriteLine(Student[i].name + " did not get Admission");
+                    }
+                }
+                
+
+            }
+        }
+        static void SpecificView( List<STUDENT> Student)
+        {
+            Console.Write("Enter the Degree: ");
+            string name = Console.ReadLine();
+            Clear();
+            Console.WriteLine("Name \t \t FSC \t \t Ecat \t \t Age");
+            for (int i = 0; i < Student.Count; i++)
+            {
+                for (int x = 0; x < Student[i].registeredProgram.Count; x++)
+                {
+                    if (name == Student[i].registeredProgram[x].title)
+                    {
+                        Console.WriteLine(Student[i].name + "\t \t" + Student[i].FscMarks + "\t \t" + Student[i].EcatMarks + "\t \t" + Student[i].age);
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+
+            }
+        }
+        static void sort(List<STUDENT> student)
+        {
+            for (int i = 0; i < student.Count; i++)
+            {
+                for (int j = 1; j < student.Count - 1; j++)
+                {
+                    student[i].merit = student[i].CalculateMerit();
+                    student[j].merit = student[j].CalculateMerit();
+                    if (student[j].merit > student[i].merit)
+                    {
+                        STUDENT temp = new STUDENT();
+                        temp = student[i];
+                        student[i] = student[j];
+                        student[j] = temp;
+                    }
+                }
+
+            }
+        }
+        static void AddregisteredSubject(List<STUDENT> Student)
+        {
+            Console.Write("Enter Student name: ");
+            string name = Console.ReadLine();
+            Console.Write("Enter Subject code: ");
+            string code = Console.ReadLine();
+            int count = 0;
+            for (int i = 0; i < Student.Count; i++)
+            {
+                for (int x = 0; x < Student[i].registeredProgram.Count; x++)
+                {
+                    for (int y = 0; y < Student[i].registeredProgram[x].newSubjects.Count; y++)
+                    {
+                        if (name == Student[i].name && code == Student[i].registeredProgram[x].newSubjects[y].code)
+                        {
+                            int creditHours = Student[i].creditHourCalculator() + Student[i].registeredProgram[x].newSubjects[y].creditHours;
+                            if (creditHours <= 9)
+                            {
+                                Student[i].registeredSubject.Add(Student[i].registeredProgram[x].newSubjects[y]);
+                                count++;
+                            }
+                            else
+                            {
+                                Console.WriteLine("Credit Hour Limit Exceeded");
+                                break;
+                            }
+
+                        }
+
+                    }
+
+                }
+            }
+            if (count == 0)
+            {
+                Console.WriteLine("wrong input");
+            }
+        }
+       static void calculateFees(List<STUDENT> Student)
+        {
+            for (int i = 0; i < Student.Count; i++)
+            {
+                Console.WriteLine(Student[i].name + " has " + Student[i].calculateFee() + " fee");
+            }
+        }
+    }
+}
+
+
+//=====================CLASS STUDENT============
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Week4ProgramingDay.BL
+{
+    class STUDENT
+    {
+        public STUDENT()
+        {
+
+        }
+        public STUDENT(string Sname, int Sage, float Fsc, float Ecat, List<DegreeProgram> degree)
+        {
+            name = Sname;
+            age = Sage;
+            FscMarks = Fsc;
+            EcatMarks = Ecat;
+            newDegrees = degree;
+        }
+
+        public string name;
+        public int age;
+        public float FscMarks;
+        public float EcatMarks;
+        public float merit;
+        public List<DegreeProgram> newDegrees = new List<DegreeProgram>();
+        public List<DegreeProgram> registeredProgram = new List<DegreeProgram>();
+        public List<SUBJECT> registeredSubject = new List<SUBJECT>();
+        public float CalculateMerit()
+        {
+            merit = FscMarks * 0.60F + EcatMarks * 0.40F;
+            return merit;
+        }
+
+        public int calculateFee()
+        {
+            int fees = 0;
+            for (int i = 0; i < registeredSubject.Count; i++)
+            {
+                fees = fees + registeredSubject[i].subjectFee;
+            }
+            return fees;
+        }
+
+        public int creditHourCalculator()
+        {
+            int creditHours = 0;
+            for (int i = 0; i < registeredSubject.Count; i++)
+            {
+                creditHours = creditHours + registeredSubject[i].creditHours;
+            }
+            return creditHours;
+        }
+    }
+}
+
+
+//======================== CLASS DEGREEPROGMAN============
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Week4ProgramingDay.BL
+{
+    class DegreeProgram
+    {
+        public string title;
+        public int duration;
+        public int availableSeats;
+        public List<SUBJECT> newSubjects = new List<SUBJECT>();
+        public SUBJECT addSubject()
+        {
+            SUBJECT newSubject = new SUBJECT();
+            Console.WriteLine("Enter Subject Code: ");
+            newSubject.code = Console.ReadLine();
+            Console.WriteLine("Enter Subject Type: ");
+            newSubject.subjectType = Console.ReadLine();
+            Console.WriteLine("Enter Subject Credit Hours");
+            newSubject.creditHours = int.Parse(Console.ReadLine());
+            Console.WriteLine("Enter the Subject Fees: ");
+            newSubject.subjectFee = int.Parse(Console.ReadLine());
+            return newSubject;
+        }
+        public int creditHourCalculator()
+        {
+            int creditHours = 0;
+            for (int i = 0; i < newSubjects.Count; i++)
+            {
+                creditHours = creditHours + newSubjects[i].creditHours;
+            }
+            return creditHours;
+        }
+    }
+}
+
+
+//================CLASS SUBJECTS===========
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Week4ProgramingDay.BL
+{
+    class SUBJECT
+    {
+        public string code;
+        public int creditHours;
+        public string subjectType;
+        public int subjectFee;
+    }
+}

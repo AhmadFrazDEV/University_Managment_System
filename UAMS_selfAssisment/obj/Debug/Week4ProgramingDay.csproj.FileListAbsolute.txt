@@ -1,0 +1,35 @@
+D:\University\CODE\Semester 2\Week4ProgramingDay\bin\Debug\Week4ProgramingDay.exe.config
+D:\University\CODE\Semester 2\Week4ProgramingDay\bin\Debug\Week4ProgramingDay.exe
+D:\University\CODE\Semester 2\Week4ProgramingDay\bin\Debug\Week4ProgramingDay.pdb
+D:\University\CODE\Semester 2\Week4ProgramingDay\obj\Debug\Week4ProgramingDay.csproj.AssemblyReference.cache
+D:\University\CODE\Semester 2\Week4ProgramingDay\obj\Debug\Week4ProgramingDay.csproj.CoreCompileInputs.cache
+D:\University\CODE\Semester 2\Week4ProgramingDay\obj\Debug\Week4ProgramingDay.exe
+D:\University\CODE\Semester 2\Week4ProgramingDay\obj\Debug\Week4ProgramingDay.pdb
+D:\University\CODE\Semester 2\UAMS\bin\Debug\Week4ProgramingDay.exe.config
+D:\University\CODE\Semester 2\UAMS\bin\Debug\Week4ProgramingDay.exe
+D:\University\CODE\Semester 2\UAMS\bin\Debug\Week4ProgramingDay.pdb
+D:\University\CODE\Semester 2\UAMS\obj\Debug\Week4ProgramingDay.csproj.AssemblyReference.cache
+D:\University\CODE\Semester 2\UAMS\obj\Debug\Week4ProgramingDay.csproj.CoreCompileInputs.cache
+D:\University\CODE\Semester 2\UAMS\obj\Debug\Week4ProgramingDay.exe
+D:\University\CODE\Semester 2\UAMS\obj\Debug\Week4ProgramingDay.pdb
+B:\UAMS_selfAssisment\bin\Debug\Week4ProgramingDay.exe.config
+B:\UAMS_selfAssisment\bin\Debug\Week4ProgramingDay.exe
+B:\UAMS_selfAssisment\bin\Debug\Week4ProgramingDay.pdb
+B:\UAMS_selfAssisment\obj\Debug\Week4ProgramingDay.csproj.AssemblyReference.cache
+B:\UAMS_selfAssisment\obj\Debug\Week4ProgramingDay.csproj.CoreCompileInputs.cache
+B:\UAMS_selfAssisment\obj\Debug\Week4ProgramingDay.exe
+B:\UAMS_selfAssisment\obj\Debug\Week4ProgramingDay.pdb
+B:\C# Projects\VIVA\UAMS\UAMS_selfAssisment\bin\Debug\Week4ProgramingDay.exe.config
+B:\C# Projects\VIVA\UAMS\UAMS_selfAssisment\bin\Debug\Week4ProgramingDay.exe
+B:\C# Projects\VIVA\UAMS\UAMS_selfAssisment\bin\Debug\Week4ProgramingDay.pdb
+B:\C# Projects\VIVA\UAMS\UAMS_selfAssisment\obj\Debug\Week4ProgramingDay.csproj.AssemblyReference.cache
+B:\C# Projects\VIVA\UAMS\UAMS_selfAssisment\obj\Debug\Week4ProgramingDay.csproj.CoreCompileInputs.cache
+B:\C# Projects\VIVA\UAMS\UAMS_selfAssisment\obj\Debug\Week4ProgramingDay.exe
+B:\C# Projects\VIVA\UAMS\UAMS_selfAssisment\obj\Debug\Week4ProgramingDay.pdb
+E:\C# Projects\VIVA\UAMS\UAMS_selfAssisment\obj\Debug\Week4ProgramingDay.csprojAssemblyReference.cache
+E:\C# Projects\VIVA\UAMS\UAMS_selfAssisment\obj\Debug\Week4ProgramingDay.csproj.CoreCompileInputs.cache
+E:\C# Projects\VIVA\UAMS\UAMS_selfAssisment\obj\Debug\Week4ProgramingDay.exe
+E:\C# Projects\VIVA\UAMS\UAMS_selfAssisment\obj\Debug\Week4ProgramingDay.pdb
+E:\C# Projects\VIVA\UAMS\UAMS_selfAssisment\bin\Debug\Week4ProgramingDay.exe.config
+E:\C# Projects\VIVA\UAMS\UAMS_selfAssisment\bin\Debug\Week4ProgramingDay.exe
+E:\C# Projects\VIVA\UAMS\UAMS_selfAssisment\bin\Debug\Week4ProgramingDay.pdb

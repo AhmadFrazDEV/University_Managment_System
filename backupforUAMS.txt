@@ -1,0 +1,589 @@
+//========================== MAIN ====================================
+
+using System;
+using static System.Console;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Week4ProgramingDay.BL;
+using Week4ProgramingDay.DL;
+using Week4ProgramingDay.UI;
+
+namespace Week4ProgramingDay
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            char op;
+            List<DegreeProgram> Degree = new List<DegreeProgram>();
+            List<STUDENT> Student = new List<STUDENT>();
+            do
+            {
+                header();
+                op = menu();
+                Clear();
+                if (op == '1')
+                {
+                  
+                    header();
+                    Student.Add(student_DL.AddStudent(Degree));
+                    Clear();
+                }
+                else if (op == '2')
+                {
+                    
+                    header();
+                    Degree.Add(degreeProgram_DL.AddDegree());
+                    Clear();
+                }
+                else if (op == '3')
+                {
+                    
+                    header();
+                    student_DL.GenerateMerit(Student, Degree);
+                    Clear();
+                }
+                else if (op == '4')
+                {
+                   
+                    header();
+                    student_UI.ViewAllStudent(Student);
+                    Clear();
+                }
+                else if (op == '5')
+                {
+                    
+                    header();
+                    student_UI.SpecificView(Student);
+                    Clear();
+                }
+                else if (op == '6')
+                {
+                    header();
+                    degreeProgram_DL.AddregisteredSubject(Student);
+                    Clear();
+                }
+                else if (op == '7')
+                {
+                    header();
+                    degreeProgram_DL.calculateFees(Student);
+                    Clear();
+                }
+            }
+            while (op != '8');
+        }
+        static void header()
+        {
+            Console.WriteLine("==================> UAMS <====================");
+          
+        }
+        static char menu()
+        {
+            char op;
+            Console.WriteLine("1. Add Student.");
+            Console.WriteLine("2. Add Degree Program.");
+            Console.WriteLine("3. Generate Merit.");
+            Console.WriteLine("4. View Registered Students.");
+            Console.WriteLine("5. View Students of a Specific Program.");
+            Console.WriteLine("6. Register Subjects for a Specfic Program.");
+            Console.WriteLine("7. Calculate Fees for all Registered Students.");
+            Console.WriteLine("8. Exit");
+            Console.Write("Your Option ------> ");
+            op = char.Parse(Console.ReadLine());
+            return op;
+        }
+        static void Clear()
+        {
+            Console.WriteLine("Press any key button to continue");
+            Console.ReadKey();
+            Console.Clear();
+        }
+        
+    }
+}
+
+
+//================================SUBJECT.cs ====================================
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Week4ProgramingDay.BL
+{
+    class SUBJECT
+    {
+        public SUBJECT()
+        {
+
+        }
+        private string code;
+        private int creditHours;
+        private string subjectType;
+        private int subjectFee;
+
+        public SUBJECT(string code , int creditHours , string subjectType , int subjectFee)
+        {
+            this.code = code;
+            this.creditHours = creditHours;
+            this.subjectType = subjectType;
+            this.subjectFee = subjectFee;
+        }
+
+        public string getCode() { return code; }
+        public void setCode(string code) { this.code = code;  }
+
+        public int getcreditHours() { return creditHours; }
+        public void setcreditHours(int creditHours) { this.creditHours = creditHours; }
+
+        public string getsubjectType() { return subjectType; }
+        public void setsubjectType(string subjectType) { this.subjectType = subjectType; }
+
+        public int getsubjectFee() { return subjectFee; }
+        public void setsubjectFee(int subjectFee) { this.subjectFee = subjectFee; }
+    }
+}
+
+//===========================================DegreeProram.cs================================
+
+using System;
+using static System.Console;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Week4ProgramingDay.BL
+{
+    class DegreeProgram
+    {
+        public DegreeProgram()
+        {
+
+        }
+        private string title;
+        private int duration;
+        private int availableSeats;
+        public List<SUBJECT> newSubjects = new List<SUBJECT>();
+
+        public DegreeProgram(string title , int duration , int availableSeats)
+        {
+            this.title = title;
+            this.duration = duration;
+            this.availableSeats = availableSeats;
+        }
+
+      public string getTitle() { return title; }
+        public void setTitle(string title) { this.title = title; }
+
+        public int getSeats() { return availableSeats; }
+        public void setSeats(int availableSeats) { this.availableSeats = availableSeats; }
+
+        public int getDuration() { return duration; }
+        public void setDuration(int duration) { this.duration = duration; }
+
+        public SUBJECT addSubject()
+        {
+            SUBJECT newSubject = new SUBJECT();
+            WriteLine("Enter Subject Code: ");
+            string newCode = ReadLine();
+            newSubject.setCode(newCode);
+            WriteLine("Enter Subject Type: ");
+            string newSub = ReadLine();
+            newSubject.setsubjectType(newSub);
+            WriteLine("Enter Subject Credit Hours");
+            int newCredit = int.Parse(ReadLine());
+            newSubject.setcreditHours(newCredit);
+            WriteLine("Enter the Subject Fees: ");
+            int newFee = int.Parse(ReadLine());
+            newSubject.setsubjectFee(newFee);
+            return newSubject;
+        }
+        public int creditHourCalculator()
+        {
+            int creditHours = 0;
+            for (int i = 0; i < newSubjects.Count; i++)
+            {
+                creditHours = creditHours + newSubjects[i].getcreditHours();
+            }
+            return creditHours;
+        }
+    }
+}
+
+//=================================Student.cs===============================
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+
+namespace Week4ProgramingDay.BL
+{
+    class STUDENT
+    {
+        public STUDENT()
+        {
+
+        }
+        public STUDENT(string Sname, int Sage, float Fsc, float Ecat, List<DegreeProgram> degree)
+        {
+            name = Sname;
+            age = Sage;
+            FscMarks = Fsc;
+            EcatMarks = Ecat;
+            newDegrees = degree;
+        }
+
+
+        private string name;
+        private int age;
+        private float FscMarks;
+        private float EcatMarks;
+        private float merit;
+        public  List<DegreeProgram> newDegrees = new List<DegreeProgram>();
+        public  List<DegreeProgram> registeredProgram = new List<DegreeProgram>();
+        public  List<SUBJECT> registeredSubject = new List<SUBJECT>();
+
+
+        public  string getname() { return name; }
+        public void setname() { this.name = name; }
+
+        public int  getage() { return age; }
+        public void setage() { this.age = age; }
+
+        public float getFscMarks() { return FscMarks; }
+        public void setFscMarks() { this.FscMarks = FscMarks; }
+
+        public float getEcatMarks() { return FscMarks; }
+        public void setEcatMarks() { this.EcatMarks = EcatMarks; }
+
+        public float getmerit() { return merit; }
+        public void setmerit() { this.merit = merit; }
+
+
+
+        public float CalculateMerit()
+        {
+            merit = FscMarks * 0.60F + EcatMarks * 0.40F;
+            return merit;
+        }
+
+        public int calculateFee()
+        {
+            int fees = 0;
+            for (int i = 0; i < registeredSubject.Count; i++)
+            {
+                fees = fees + registeredSubject[i].getsubjectFee();
+            }
+            return fees;
+        }
+
+        public int creditHourCalculator()
+        {
+            int creditHours = 0;
+            for (int i = 0; i < registeredSubject.Count; i++)
+            {
+                creditHours = creditHours + registeredSubject[i].getcreditHours();
+            }
+            return creditHours;
+        }
+    }
+}
+
+
+//===============================  Student_DL ===============================
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Week4ProgramingDay.BL;
+using Week4ProgramingDay.DL;
+using Week4ProgramingDay.UI;
+namespace Week4ProgramingDay.DL
+{
+    class student_DL
+    {
+        public static STUDENT AddStudent(List<DegreeProgram> Degree)
+        {
+            Console.Write("Enter Student Name: ");
+            string name = Console.ReadLine();
+            Console.Write("Enter Student Age: ");
+            int age = int.Parse(Console.ReadLine());
+            Console.Write("Enter Student FSc Marks: ");
+            float FscMarks = float.Parse(Console.ReadLine());
+            Console.Write("Enter Student Ecat Marks: ");
+            float EcatMarks = float.Parse(Console.ReadLine());
+
+            Console.WriteLine("Available Degree Programs");
+            for (int i = 0; i < Degree.Count; i++)
+            {
+                Console.WriteLine(Degree[i].getTitle());
+            }
+
+            Console.Write("Enter how many preferences to Enter: ");
+            int NumOFPreference = int.Parse(Console.ReadLine());
+            List<DegreeProgram> newdegree = new List<DegreeProgram>();
+            for (int i = 0; i < NumOFPreference; i++)
+            {
+                string newTemp = Console.ReadLine();
+                DegreeProgram temp = new DegreeProgram();
+                
+                int count = 0;
+                for (int x = 0; x < Degree.Count; x++)
+                {
+                    if (temp.getTitle() == Degree[x].getTitle())
+                    {
+                        newdegree.Add(temp);
+                        count++;
+                    }
+                }
+                if (count == 0)
+                {
+                    Console.WriteLine("Wrong input");
+                }
+            }
+            STUDENT newStudent = new STUDENT(name, age, FscMarks, EcatMarks, newdegree);
+
+            return newStudent;
+        }
+
+        public static void GenerateMerit(List<STUDENT> Student, List<DegreeProgram> Degree)
+        {
+            DegreeProgram std = new DegreeProgram();
+            sort(Student);
+            for (int i = 0; i < Student.Count; i++)
+            {
+                for (int j = 0; j < Student[i].newDegrees.Count; j++)
+                {
+                    if (Student[i].newDegrees[j].getTitle() == Degree[i].getTitle() && Degree[i].getSeats() > 0)
+                    {
+                        Console.WriteLine(Student[i].getname() + " got Admission in " + Student[i].newDegrees[j].getTitle());
+                        Student[i].registeredProgram.Add(Degree[i]);
+                        int s =Degree[i].getSeats();
+                        s--;
+                        std.setSeats(s);
+
+                    }
+                    else
+                    {
+                        Console.WriteLine(Student[i].getname() + " did not get Admission");
+                    }
+                }
+            }
+        }
+
+        public static void sort(List<STUDENT> student)
+        {
+            List<STUDENT> studentList = new List<STUDENT>();
+            List<STUDENT> sortedList = studentList.OrderBy(o => o.getmerit()).ToList();
+            }
+        }
+
+    }
+
+
+
+//================================= DegreeProgram_DL  ==================================
+
+using System;
+using static System.Console;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Week4ProgramingDay.BL;
+namespace Week4ProgramingDay.DL
+{
+    class degreeProgram_DL
+    {
+        public static DegreeProgram AddDegree()
+        {
+            DegreeProgram newDegree = new DegreeProgram();
+            Write("Enter Degree Name: ");
+            string newTitle = ReadLine();
+            newDegree.setTitle(newTitle);
+            Write("Enter Degree Duration: ");
+            int newdue = int.Parse(ReadLine());
+            newDegree.setDuration(newdue);
+            Write("Enter Seats for Degree: ");
+            int newSeats = int.Parse(ReadLine());
+            newDegree.setSeats(newSeats);
+            Console.WriteLine("Enter how many subjects to Enter: ");
+            int NumOfSubject = int.Parse(Console.ReadLine());
+            SUBJECT temp = new SUBJECT();
+            int creditHrs = 0;
+            for (int i = 0; i < NumOfSubject; i++)
+            {
+
+                temp = newDegree.addSubject();
+                creditHrs = temp.getcreditHours() + newDegree.creditHourCalculator();
+                if (creditHrs <= 20)
+                {
+                    newDegree.newSubjects.Add(temp);
+                }
+                else
+                {
+                    Console.WriteLine("Credit hours limit exceeded");
+                    break;
+                }
+            }
+            return newDegree;
+        }
+
+       public static void AddregisteredSubject(List<STUDENT> Student)
+        {
+            Console.Write("Enter Student name: ");
+            string name = Console.ReadLine();
+            Console.Write("Enter Subject code: ");
+            string code = Console.ReadLine();
+            int count = 0;
+            for (int i = 0; i < Student.Count; i++)
+            {
+                for (int x = 0; x < Student[i].registeredProgram.Count; x++)
+                {
+                    for (int y = 0; y < Student[i].registeredProgram[x].newSubjects.Count; y++)
+                    {
+                        if (name == Student[i].getname() && code == Student[i].registeredProgram[x].newSubjects[y].getsubjectType())
+                        {
+                            int creditHours = Student[i].creditHourCalculator() + Student[i].registeredProgram[x].newSubjects[y].getcreditHours();
+                            if (creditHours <= 9)
+                            {
+                                Student[i].registeredSubject.Add(Student[i].registeredProgram[x].newSubjects[y]);
+                                count++;
+                            }
+                            else
+                            {
+                                Console.WriteLine("Credit Hour Limit Exceeded");
+                                break;
+                            }
+
+                        }
+
+                    }
+
+                }
+            }
+            if (count == 0)
+            {
+                Console.WriteLine("wrong input");
+            }
+        }
+
+        public static void calculateFees(List<STUDENT> Student)
+        {
+            for (int i = 0; i < Student.Count; i++)
+            {
+                Console.WriteLine(Student[i].getname() + " has " + Student[i].calculateFee() + " fee");
+            }
+        }
+    }
+}
+
+
+// ===============================  Subject_DL ============================
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Week4ProgramingDay.DL
+{
+    class subject_DL
+    {
+    }
+}
+
+
+//============================== Student_UI =============================
+
+using System;
+using static System.Console;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Week4ProgramingDay.BL;
+namespace Week4ProgramingDay.UI
+{
+    class student_UI
+    {
+      
+       public static void ViewAllStudent(List<STUDENT> Student)
+        {
+            Console.WriteLine("Name \t \t FSC \t \t Ecat \t \t Age");
+            for (int i = 0; i < Student.Count; i++)
+            {
+                if (Student[i].registeredProgram != null)
+                {
+                    Console.WriteLine(Student[i].getname() + "\t \t" + Student[i].getFscMarks() + "\t \t" + Student[i].getEcatMarks() + "\t \t" + Student[i].getage());
+                }
+
+            }
+        }
+
+      public  static void SpecificView(List<STUDENT> Student)
+        {
+            Console.Write("Enter the Degree: ");
+            string name = Console.ReadLine();
+            Clear();
+            Console.WriteLine("Name \t \t FSC \t \t Ecat \t \t Age");
+            for (int i = 0; i < Student.Count; i++)
+            {
+                for (int x = 0; x < Student[i].registeredProgram.Count; x++)
+                {
+                    if (name == Student[i].registeredProgram[x].getTitle())
+                    {
+                        Console.WriteLine(Student[i].getname() + "\t \t" + Student[i].getFscMarks() + "\t \t" + Student[i].getEcatMarks() + "\t \t" + Student[i].getage());
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+
+            }
+        }
+
+    }
+}
+
+//=================================== DegreeProgram_UI =================================
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Week4ProgramingDay.UI
+{
+    class degreeProgram_UI
+    {
+    }
+}
+
+
+// ============================ subject_UI =============================
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Week4ProgramingDay.UI
+{
+    class subject_UI
+    {
+    }
+}

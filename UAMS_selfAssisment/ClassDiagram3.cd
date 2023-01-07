@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Week4ProgramingDay.BL.DegreeProgram">
+    <Position X="4.25" Y="0.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAYAQAAAAAAAAAgAAAIAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>BL\DegreeProgram.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="newSubjects" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Week4ProgramingDay.BL.STUDENT">
+    <Position X="0.5" Y="0.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AgAAABAAAAQAQAALAAAAAAAAAABEAARAAAAAAAAAAAA=</HashCode>
+      <FileName>BL\STUDENT.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="newDegrees" />
+      <Field Name="registeredProgram" />
+      <Field Name="registeredSubject" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Week4ProgramingDay.BL.SUBJECT">
+    <Position X="7.25" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAAAAAAAAAAAAAQAAAIAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>BL\SUBJECT.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

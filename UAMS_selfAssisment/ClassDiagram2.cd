@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Comment CommentText="1 student can Appliy for many Degrees">
+    <Position X="3.219" Y="1.865" Height="0.49" Width="1.513" />
+  </Comment>
+  <Comment CommentText="1 student can registered in many Subjects">
+    <Position X="8.073" Y="3.344" Height="0.51" Width="1.627" />
+  </Comment>
+  <Comment CommentText="1 Degree Program can Have Many subjects">
+    <Position X="7.333" Y="0.906" Height="0.5" Width="1.544" />
+  </Comment>
+  <Class Name="Week4ProgramingDay.BL.DegreeProgram">
+    <Position X="5" Y="1.5" Width="2.25" />
+    <AssociationLine Name="Have" Type="Week4ProgramingDay.BL.SUBJECT">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.422" Y="0.05" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AgAAAAYAQBAAAAAAAAgAAAIAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>BL\DegreeProgram.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Have" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Week4ProgramingDay.BL.STUDENT">
+    <Position X="0.5" Y="1" Width="2.5" />
+    <AssociationLine Name="Applies" Type="Week4ProgramingDay.BL.DegreeProgram">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.693" Y="0.039" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="Registered" Type="Week4ProgramingDay.BL.SUBJECT">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="1.214" Y="0.758" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AgAAABAAAAQAQAALEAAAAIAAAABEAARAAAAAAAAAAAA=</HashCode>
+      <FileName>BL\STUDENT.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Applies" />
+      <Property Name="Registered" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Week4ProgramingDay.BL.SUBJECT">
+    <Position X="8.75" Y="1.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAAAAAAAAAAAAAQAAAIAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>BL\SUBJECT.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
